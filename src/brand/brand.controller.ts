@@ -9,21 +9,21 @@ import {
   Put,
 } from '@nestjs/common';
 import { AddonsModel } from 'src/database/Models/addons.model';
-import { BrandModel } from 'src/database/Models/brand.model';
-import { CategoryModel } from 'src/database/Models/category.model';
 import { BrandService } from './brand.service';
+import { CreateAddonDto } from './dto/create-addons.dto';
+import { CreateBrandDto } from './dto/create-brand.dto';
 
 @Controller('brand')
 export class BrandController {
   constructor(private brandService: BrandService) {}
 
   @Post(':brandId/addons')
-  async createBrandAddons(@Body() props: Partial<AddonsModel>) {
+  async createBrandAddons(@Body() props: Partial<CreateAddonDto>) {
     return this.brandService.createBrandAddon(props);
   }
 
   @Post('new')
-  async createBrand(@Body() props: Partial<BrandModel>) {
+  async createBrand(@Body() props: Partial<CreateBrandDto>) {
     return this.brandService.createBrand(props);
   }
 
@@ -36,17 +36,6 @@ export class BrandController {
   @Get('/all')
   async getAllBrands() {
     const addons = await this.brandService.findallBrand();
-    return addons;
-  }
-
-  @Post('category')
-  async createCategory(@Body() props: Partial<CategoryModel>) {
-    return this.brandService.createCategory(props);
-  }
-
-  @Get('/category/all')
-  async getAllCategories() {
-    const addons = await this.brandService.findallCategories();
     return addons;
   }
 

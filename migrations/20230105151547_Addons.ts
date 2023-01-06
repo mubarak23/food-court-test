@@ -8,8 +8,8 @@ export async function up(knex: Knex): Promise<void> {
     t.text('name');
     t.text('description').nullable();
     t.integer('price');
-    t.string('category_id').references('id').inTable('categories');
-    t.string('brand_id').references('id').inTable('brands');
+    t.string('category').nullable();
+    t.integer('brand_id');
     t.timestamp('created_at').defaultTo(knex.fn.now());
     t.timestamp('updated_at').defaultTo(knex.fn.now());
   });

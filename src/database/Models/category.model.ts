@@ -6,17 +6,4 @@ export class CategoryModel extends BaseModel {
   static tableName = 'categories';
   name: string;
   brandId: number;
-
-  // static get relationMappings() {
-  //   return {
-  //     brand: {
-  //       relation: Model.BelongsToOneRelation,
-  //       modelClass: BrandModel,
-  //       join: {
-  //         from: 'Category.brandId',
-  //         to: 'brands.id',
-  //       },
-  //     },
-  //   };
-  // }
 }

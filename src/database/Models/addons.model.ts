@@ -7,28 +7,7 @@ export class AddonsModel extends BaseModel {
   static tableName = 'addons';
   name: string;
   description: string;
-  price: string;
+  price: number;
   brandId: number;
-  categoryId: number;
-
-  static get relationMappings() {
-    return {
-      category: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: CategoryModel,
-        join: {
-          from: 'addons.categoryId',
-          to: 'categories.id',
-        },
-      },
-      brand: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: BrandModel,
-        join: {
-          from: 'addons.brandId',
-          to: 'brands.id',
-        },
-      },
-    };
-  }
+  category: string;
 }
