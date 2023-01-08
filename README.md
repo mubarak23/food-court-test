@@ -2,7 +2,7 @@
 
 ## Description
 
-[Live URL]: https://foodcourttest.vercel.app/
+[Live URL]: 
 
 ## Installation
 
