@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  ParseIntPipe,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RoleGuard } from 'src/auth/role.guard';
 import { Roles } from 'src/auth/roles.decorator';
@@ -11,9 +20,12 @@ export class CategoryController {
 
   @Roles('ADMIN')
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Post('')
-  async createCategory(@Body() props: Partial<CreateCategoryDto>) {
-    return this.categoryService.createCategory(props);
+  @Post('/:brandId')
+  async createCategory(
+    @Param('brandId', new ParseIntPipe()) brandId: number,
+    @Body() props: Partial<CreateCategoryDto>,
+  ) {
+    return this.categoryService.createCategory(props, brandId);
   }
 
   @Roles('ADMIN')

@@ -58,9 +58,9 @@ $ npm run start:prod
 ]
 
 # CREATE A CATEGORY
-- URL: /category
+- URL: /category/{brandId}
 - METHOD: GET
-- REQUIRED AUTH TOKEN (Admin role): NO
+- REQUIRED AUTH TOKEN (Admin role): YES
 - PAYLOAD SAMPLE: {
   "name": "swallo",
   "brandId": 1
@@ -75,7 +75,7 @@ $ npm run start:prod
 # GET ALL CATEGORIES
 - URL: /category/all
 - METHOD: GET
-- REQUIRED AUTH TOKEN (Admin role): NO
+- REQUIRED AUTH TOKEN (Admin role): YES
 - SAMPLE RESPONSE: [
   {
     "id": 1,
@@ -124,13 +124,83 @@ $ npm run start:prod
   }
 ]
 
+# GET SINGLE BRAND ADDON
+- URL: /brand/{brandId}/addons/{addonId}
+- METHOD: GET
+- REQUIRED AUTH TOKEN (Admin role): YES
+- SAMPLE RESPONSE: {
+  "id": 1,
+  "name": "pepe combo",
+  "description": "Spicy Food",
+  "price": 450,
+  "category": "Swallo",
+  "brandId": 1,
+  "createdAt": "2023-01-08T11:59:26.496Z",
+  "updatedAt": "2023-01-08T11:59:26.496Z"
+}
 
-## Stay in touch
+// UPDATE
+# UPDATE ADDONS
+-  URL: /brand/{brandId}/addons/{addonId}
+- REQUIRED AUTH TOKEN (Admin role): YES
+- METHOD: PUT
+- SAMPLE REQUEST PAYLOAD: {
+  "description": "Spicy Food",
+  "name": "pepe combo"
+}
+- SAMPLE RESPONSE: {
+  "id": 1,
+  "name": "pepe combo",
+  "description": "Spicy Food",
+  "price": 450,
+  "category": "Swallo",
+  "brandId": 1,
+  "createdAt": "2023-01-08T11:59:26.496Z",
+  "updatedAt": "2023-01-08T11:59:26.496Z"
+}
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
+// DELETE 
 
-Nest is [MIT licensed](LICENSE).
+# DELETE AN ADDON
+- URL: /brand/{brandId}/addons/{addonId}
+- REQUIRED AUTH TOKEN (Admin role): YES
+- METHOD: DELETE
+- SAMPLE RESPONSE: {
+  "id": 4,
+  "name": "Fest Food",
+  "description": "goat meat",
+  "price": 1500,
+  "category": "Swallo",
+  "brandId": 1,
+  "createdAt": "2023-01-08T15:26:32.387Z",
+  "updatedAt": "2023-01-08T15:26:32.387Z"
+} 
+
+# USER SIGNUP 
+- URL: auth/signup
+- METHOD: POST
+- REQUEST PAYLOAD: {
+  "name":"defaultO1",
+  "email": "default01@gmail.com",
+  "password": "pass123",
+  "role": "ADMIN"
+}
+- RESPONSE DATA: {
+  "response": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGVmYXVsdE8xIiwiZW1haWwiOiJkZWZhdWx0MDFAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkT2VKLjlwUGtIcjJqdW1Wd3M1Mk83ZTFZcFNyTFkxY0NnYmNE"
+  }
+}
+
+# USER LOGIN
+- URL: auth/login
+- METHOD: POST
+- REQUEST PAYLOAD: {
+  "email": "default01@gmail.com",
+  "password": "pass123"
+}
+- RESPONSE DATA:  {
+  "response": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGVmYXVsdE8xIiwiZW1haWwiOiJkZWZhdWx0MDFAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkT2VKLjlwUGtIcjJqdW1Wd3M1Mk83ZTFZcFNyTFkxY0NnYmNE"
+  }
+}
