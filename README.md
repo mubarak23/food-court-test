@@ -16,7 +16,7 @@
 
 ## Setup .env Variables
 - DATABASE_URL=
-JWT_KEY=
+- JWT_KEY=
 
 ## Running the app
 
