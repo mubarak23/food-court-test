@@ -13,7 +13,7 @@ const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'postgresql',
     connection: {
-      database: 'addons',
+      database: 'demo',
       user: 'postgres',
       password: 'pass123',
     },

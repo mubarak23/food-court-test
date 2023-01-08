@@ -4,8 +4,9 @@ import { knexSnakeCaseMappers, Model } from 'objection';
 import { BrandModel } from './Models/brand.model';
 import { CategoryModel } from './Models/category.model';
 import { AddonsModel } from './Models/addons.model';
+import { UserModel } from './Models/users.model';
 
-const models = [BrandModel, CategoryModel, AddonsModel];
+const models = [BrandModel, CategoryModel, AddonsModel, UserModel];
 
 const modelProviders = models.map((model) => {
   return {
@@ -21,7 +22,7 @@ const providers = [
     useFactory: async () => {
       const knex = Knex({
         client: 'pg',
-        connection: 'postgres://postgres:pass123@localhost:5432/addons', // process.env.DATABASE_URL,
+        connection: 'postgres://postgres:pass123@localhost:5432/demo', // process.env.DATABASE_URL,
         debug: process.env.KNEX_DEBUG === 'true',
         ...knexSnakeCaseMappers(),
       });
