@@ -22,7 +22,8 @@ const providers = [
     useFactory: async () => {
       const knex = Knex({
         client: 'pg',
-        connection: 'postgres://postgres:pass123@localhost:5432/demo', // process.env.DATABASE_URL,
+        connection:
+          'postgres://jlddxsjf:JMTFsdcaAUrBHxc_jKtHF54MtTB-vzMf@kandula.db.elephantsql.com/jlddxsjf', // process.env.DATABASE_URL,
         debug: process.env.KNEX_DEBUG === 'true',
         ...knexSnakeCaseMappers(),
       });
