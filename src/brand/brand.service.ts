@@ -21,8 +21,9 @@ export class BrandService {
     return this.AddonClass.query().findOne({ id, brandId });
   }
 
-  createBrandAddon(props: Partial<AddonsModel>) {
-    return this.AddonClass.query().insert(props).returning('*');
+  createBrandAddon(props: Partial<AddonsModel>, brandId: number) {
+    const addons = { brandId, ...props };
+    return this.AddonClass.query().insert(addons).returning('*');
   }
 
   createBrand(props: Partial<BrandModel>) {
@@ -31,6 +32,9 @@ export class BrandService {
 
   findallBrand() {
     return this.BrandClass.query();
+  }
+  findSingleBrand(id: number) {
+    return this.BrandClass.query().findById(id);
   }
 
   createCategory(props: Partial<CategoryModel>) {
@@ -43,8 +47,8 @@ export class BrandService {
 
   updateBrandAddons(id: number, props: Partial<AddonsModel>) {
     return this.AddonClass.query()
-      .patch(props)
       .where({ id })
+      .update(props)
       .returning('*')
       .first();
   }

@@ -18,7 +18,7 @@ export class AuthService {
     const newUser = await this.UserClass.query().insert(props).returning('*');
 
     if (newUser) {
-      const accessToken = sign({ ...newUser }, 'secrete');
+      const accessToken = sign({ ...newUser }, process.env.JWT_KEY);
       return { token: accessToken };
     } else {
       throw new NotFoundException('User Signup Fail');

@@ -12,12 +12,11 @@ const config: { [key: string]: Knex.Config } = {
 
   development: {
     client: 'postgresql',
-    connection:
-      'postgres://jlddxsjf:JMTFsdcaAUrBHxc_jKtHF54MtTB-vzMf@kandula.db.elephantsql.com/jlddxsjf', // process.env.DATABASE_URL
+    connection: process.env.DATABASE_URL,
     // connection: {
-    //   database: 'jlddxsjf',
+    //   database: 'demo',
     //   user: 'postgres',
-    //   password: 'pass123',
+    //   password: 'pas45fkdur3s123',
     // },
     pool: {
       min: 2,

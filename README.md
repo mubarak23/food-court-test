@@ -1,36 +1,18 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Live URL]: https://foodcourttest.vercel.app/
 
 ## Installation
 
-```bash
-$ npm install
-```
+# install package 
+-- npm install
+
+# run the migration
+-- knex migrate:latest 
+
+
 
 ## Running the app
 
@@ -45,22 +27,103 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
+## Endpoint 
 
-# e2e tests
-$ npm run test:e2e
+# Create a Brand
+ - URL brand/new
+ - METHOD: POST
+ - REQUIRED AUTH TOKEN (Admin role): YES
+ - PAYLOAD SAMPLE: {
+    "name": "Jumia Food"
+    }
+- RESPONSE SAMPLE: {
+  "name": "Jumia Food",
+  "id": 1,
+  "createdAt": "2023-01-08T11:46:33.175Z",
+  "updatedAt": "2023-01-08T11:46:33.175Z"
+}
 
-# test coverage
-$ npm run test:cov
-```
+# GET ALL BRANDS
+- URL: /brand/all
+- METHOD: GET
+- REQUIRED AUTH TOKEN (Admin role): YES
+- RESPONSE SAMPLE: [
+  {
+    "id": 1,
+    "name": "Jumia Food",
+    "createdAt": "2023-01-08T11:46:33.175Z",
+    "updatedAt": "2023-01-08T11:46:33.175Z"
+  }
+]
 
-## Support
+# CREATE A CATEGORY
+- URL: /category
+- METHOD: GET
+- REQUIRED AUTH TOKEN (Admin role): NO
+- PAYLOAD SAMPLE: {
+  "name": "swallo",
+  "brandId": 1
+}
+- RESPONSE SAMPLE: {
+  "name": "swallo",
+  "brandId": 1,
+  "id": 1,
+  "createdAt": "2023-01-08T11:51:45.367Z",
+  "updatedAt": "2023-01-08T11:51:45.367Z"
+}
+# GET ALL CATEGORIES
+- URL: /category/all
+- METHOD: GET
+- REQUIRED AUTH TOKEN (Admin role): NO
+- SAMPLE RESPONSE: [
+  {
+    "id": 1,
+    "name": "swallo",
+    "brandId": 1,
+    "createdAt": "2023-01-08T11:51:45.367Z",
+    "updatedAt": "2023-01-08T11:51:45.367Z"
+  }
+]
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# CREATE BRAND ADDON
+- URL: /brand/{brandId}/addons
+- METHOD: POST
+- REQUIRED AUTH TOKEN (Admin role): YES
+- SAMPLE PAYLOAD: {
+  "name": "test",
+  "description": "Another move",
+  "price": 450,
+  "category": "Swallo"
+}
+- SAMPLE RESPONSE: {
+  "name": "test",
+  "description": "Another move",
+  "price": 450,
+  "brandId": 1,
+  "category": "Swallo",
+  "id": 1,
+  "createdAt": "2023-01-08T11:59:26.496Z",
+  "updatedAt": "2023-01-08T11:59:26.496Z"
+}
+
+# GET ALL ADDONS BELONGING TO A BRAND
+- URL:  /brand/{brandId}/addons
+- METHOD: GET
+- REQUIRED AUTH TOKEN (Admin role): YES
+- SAMPLE RESPONSE: [
+  {
+    "id": 1,
+    "name": "test",
+    "description": "Another move",
+    "price": 450,
+    "category": "Swallo",
+    "brandId": 1,
+    "createdAt": "2023-01-08T11:59:26.496Z",
+    "updatedAt": "2023-01-08T11:59:26.496Z"
+  }
+]
+
 
 ## Stay in touch
 

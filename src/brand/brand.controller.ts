@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -13,10 +14,10 @@ import {
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RoleGuard } from 'src/auth/role.guard';
 import { Roles } from 'src/auth/roles.decorator';
-import { AddonsModel } from 'src/database/Models/addons.model';
 import { BrandService } from './brand.service';
 import { CreateAddonDto } from './dto/create-addons.dto';
 import { CreateBrandDto } from './dto/create-brand.dto';
+import { UpdateAddonDto } from './dto/update-addons.dto';
 
 @Controller('brand')
 export class BrandController {
@@ -25,8 +26,16 @@ export class BrandController {
   @Roles('ADMIN')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Post(':brandId/addons')
-  async createBrandAddons(@Req() req, @Body() props: Partial<CreateAddonDto>) {
-    return this.brandService.createBrandAddon(props);
+  async createBrandAddons(
+    @Req() req,
+    @Param('brandId', new ParseIntPipe()) brandId: number,
+    @Body() props: Partial<CreateAddonDto>,
+  ) {
+    const brandExist = await this.brandService.findSingleBrand(brandId);
+    if (!brandExist) {
+      throw new NotFoundException('brand Does not Exist');
+    }
+    return this.brandService.createBrandAddon(props, brandExist.id);
   }
 
   @Roles('ADMIN')
@@ -43,6 +52,10 @@ export class BrandController {
     @Req() req,
     @Param('brandId', new ParseIntPipe()) brandId: number,
   ) {
+    const brandExist = await this.brandService.findSingleBrand(brandId);
+    if (!brandExist) {
+      throw new NotFoundException('brand Does not Exist');
+    }
     const addons = await this.brandService.findBrandsAddons(brandId);
     return addons;
   }
@@ -63,16 +76,19 @@ export class BrandController {
     @Param('brandId', new ParseIntPipe()) brandId: number,
     @Param('addonId', new ParseIntPipe()) addonId: number,
   ) {
-    const addons = await this.brandService.findSingleBrandAddon(
+    const addon = await this.brandService.findSingleBrandAddon(
       addonId,
       brandId,
     );
-    return addons;
+    if (!addon) {
+      throw new NotFoundException('Addon Does not Exist');
+    }
+    return addon;
   }
 
   @Roles('ADMIN')
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Delete(':addonId')
+  @Delete(':brandId/addons/:addonId')
   async delete(
     @Req() req,
     @Param('brandId', new ParseIntPipe()) brandId: number,
@@ -83,12 +99,20 @@ export class BrandController {
 
   @Roles('ADMIN')
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Put(':addonId')
+  @Put(':brandId/addons/:addonId')
   async editAddons(
     @Req() req,
     @Param('addonId', new ParseIntPipe()) addonId: number,
-    props: Partial<AddonsModel>,
+    @Param('brandId', new ParseIntPipe()) brandId: number,
+    @Body() props: Partial<UpdateAddonDto>,
   ) {
+    const addon = await this.brandService.findSingleBrandAddon(
+      addonId,
+      brandId,
+    );
+    if (!addon) {
+      throw new NotFoundException('Addon Does not  Belong the brand');
+    }
     const updateAddons = await this.brandService.updateBrandAddons(
       addonId,
       props,
