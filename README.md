@@ -14,6 +14,10 @@
 
 
 
+## Setup .env Variables
+- DATABASE_URL=
+JWT_KEY=
+
 ## Running the app
 
 ```bash
@@ -26,6 +30,7 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
 
 
 ## Endpoint 
